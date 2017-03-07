@@ -1,0 +1,132 @@
+<div class="container">
+  </br>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="pull-left">
+        <div class="form-group">
+          <div class="icon-addon addon-sm input-search-account">
+            <input type="text" placeholder="{{'ACCOUNT_SEARCH' | translate}}" class="form-control input-search-account"
+                   name="search" id="search" ng-model="searchText">
+            <label for="search" class="fa fa-search" rel="tooltip" title="email"></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="pull-right action-call-button-space">
+        <small><a href="#">
+          <button type="button" id="send-form-link" class="btn btn-default" aria-label="Left Align">
+            <span>{{'SMS_SENT' | translate}}</span>
+          </button>
+        </a></small>
+      </div>
+
+      <div class="pull-right action-call-button-space">
+        <small><a href="#">
+          <button type="button" id="receive-form-link" class="btn btn-default active" aria-label="Left Align">
+            <span>{{'SMS_RECEIVED' | translate}}</span>
+          </button>
+        </a></small>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-login">
+        <form id="receive-form" role="form" style="display: block;">
+          <div id="no-more-tables">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf">
+              <thead class="cf">
+              <tr class="th-blue">
+                <th>{{'ACCOUNT' | translate}} id</th>
+                <th class="numeric">Date</th>
+                <th>{{'SENDER' | translate}}</th>
+                <th>Message</th>
+                <th>{{'STATUS_MIN' | translate}}</th>
+              </tr>
+              </thead>
+              <tbody ng-hide="sms">
+              <tr>
+                <td colspan="30" align="center">{{'WAITING_FOR_API' | translate}}</td>
+              </tr>
+              </tbody>
+              <tbody ng-show="sms">
+              <tr ng-repeat="transaction in sms | filter:searchText">
+                <td data-title="Account id">{{transaction.account_id || "No id"}}</td>
+                <td data-title="Timestamp" ng-if="transaction.timestamp">{{transaction.timestamp * 1000 |
+                  date:'dd-MM-yyyy HH:mm:ss':'UTC'}}
+                </td>
+                <td data-title="Timestamp" ng-if="!transaction.timestamp">No date</td>
+                <td data-title="Sender">{{transaction.sender}}</td>
+                <td data-title="Message">{{transaction.message}}</td>
+                <td data-title="Status" ng-show="transaction.status === 'done'">{{'DONE' | translate}}</td>
+                <td data-title="Status" ng-show="transaction.status === 'error'">{{'ERROR' | translate}}</td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="text-center">
+              <ul class="pagination">
+                <li>
+                  <a href="" ng-click="pagination('1')">{{'FIRST' | translate}}</a>
+                </li>
+                <li>
+                  <a href="" ng-click="pagination('less')">
+                    <</a>
+                </li>
+                <li class="active">
+                  <a href="">{{paginationCurrent}}</a>
+                </li>
+                <li>
+                  <a href="" ng-click="pagination('more')">></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </form>
+        <form id="send-form" style="display: none;">
+          <div id="no-more-tables">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf">
+              <thead class="cf">
+              <tr class="th-blue">
+                <th>{{'ACCOUNT' | translate}} id</th>
+                <th class="numeric">Date</th>
+                <th class="numeric">Message</th>
+              </tr>
+              </thead>
+              <tbody ng-hide="smsSent">
+              <tr>
+                <td colspan="30" align="center">{{'WAITING_FOR_API' | translate}}</td>
+              </tr>
+              </tbody>
+              <tbody ng-show="smsSent">
+              <tr ng-repeat="transaction in smsSent | filter:searchText">
+                <td data-title="Account id">{{transaction.account_id}}</td>
+                <td data-title="Timestamp" ng-if="!transaction.timestamp">No date</td>
+                <td data-title="Timestamp">{{transaction.timestamp * 1000 | date:'dd-MM-yyyy HH:mm:ss':'UTC'}}</td>
+                <td data-title="Message">{{transaction.message}}</td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="text-center">
+              <ul class="pagination">
+                <li>
+                  <a href="" ng-click="paginationSmsSent('1')">{{'FIRST' | translate}}</a>
+                </li>
+                <li>
+                  <a href="" ng-click="paginationSmsSent('less')">
+                    <</a>
+                </li>
+                <li class="active">
+                  <a href="">{{paginationCurrentSmsSent}}</a>
+                </li>
+                <li>
+                  <a href="" ng-click="paginationSmsSent('more')">></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

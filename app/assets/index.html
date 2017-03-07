@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" ng-app="citytaps">
+<head>
+<!--   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"> -->
+  <title>CityTaps</title>
+  <link rel="icon" type="image/png" href="images/favicon.png"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+
+
+</head>
+<body>
+
+<div id="loading-bar-container"></div>
+<div ng-include src="'templates/navbars/navigationBar.html'" ng-show="authenticate"></div>
+<div ng-view=""></div>
+<div ng-include src="'templates/navbars/footer.html'" ng-show="authenticate"></div>
+
+<script type="text/javascript" src="scripts/vendor.js"></script>
+<script type="text/javascript" src="scripts/app.js"></script>
+<script type="text/javascript" src="config.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvzCHdgGIDRTNqvZggYr1f_muZIecOW40"></script>
+</body>
+</html>

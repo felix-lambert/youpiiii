@@ -1,0 +1,16 @@
+<uib-tabset active="active">
+  <uib-tab index="0" heading="{{'DASHBOARD_LAST_30_DAYS' | translate}}">
+    <br/>
+    <div ng-day-individual-display cash="cash30Days || 0" disconnect="disconnect30Days || 0" water="water30Days || 0" disconnect-time="disconnectTime30Days"></div>
+  </uib-tab>
+  <uib-tab index="1" heading="{{'DASHBOARD_LAST_7_DAYS' | translate}}">
+    <br/>
+    <div ng-day-individual-display cash="cash7Days || 0" disconnect="disconnect7Days || 0" water="water7Days || 0" disconnect-time="disconnectTime7Days"></div>
+  </uib-tab>
+
+  <uib-tab index="2" heading="{{'DASHBOARD_LAST_DAY' | translate}}">
+    <br/>
+
+    <div ng-day-individual-display cash="cash1Day || 0" disconnect="disconnect1Day || 0" water="water1Day || 0" disconnect-time="disconnectTime1Day || 0"></div>
+  </uib-tab>
+</uib-tabset>

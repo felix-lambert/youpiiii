@@ -1,0 +1,81 @@
+<div class="container">
+  </br>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="pull-left">
+        <div class="form-group">
+          <div class="icon-addon addon-sm input-search-account">
+            <input type="text" placeholder="{{'ACCOUNT_SEARCH' | translate}}" class="form-control input-search-account"
+                   name="search" id="search" ng-model="searchText">
+            <label for="search" class="fa fa-search" rel="tooltip" title="email"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="no-more-tables">
+    <table class="col-md-12 table-bordered table-striped table-condensed cf"
+           ng-mouseleave="hoveredCol = null; hoveredRow = null">
+      <thead class="cf">
+      <tr class="th-blue">
+        <th>CIN</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>{{'COMMENT' | translate}}</th>
+        <th ng-show="can('account_events_details')">{{'DETAILS' | translate}}</th>
+      </tr>
+      </thead>
+      <tbody ng-hide="accountEvents">
+      <tr>
+        <td colspan="30" align="center">{{'WAITING_FOR_API' | translate}}</td>
+      </tr>
+      </tbody>
+      <tbody ng-show="accountEvents">
+      <tr ng-repeat="accountEvent in accountEvents | filter: searchText"
+          ng-click="showDetails(accountEvent.account_id)">
+        <td data-title="CIN"
+            ng-mouseover="mouseOverTd(accountEvent)"
+            ng-class="{highlighted: (hoveredRow == accountEvent)}">{{accountEvent.account_id}}
+        </td>
+        <td data-title="Date"
+            ng-mouseover="mouseOverTd(accountEvent)"
+            ng-class="{highlighted: (hoveredRow == accountEvent)}">{{accountEvent.timestamp*1000 | date:'dd/MM/yyyy
+          HH:mm:ss'}}
+        </td>
+        <td data-title="Type"
+            ng-mouseover="mouseOverTd(accountEvent)"
+            ng-class="{highlighted: (hoveredRow == accountEvent)}">{{accountEvent.event_type}}
+        </td>
+        <td data-title="{{'COMMENT' | translate}}"
+            ng-mouseover="mouseOverTd(accountEvent)"
+            ng-class="{highlighted: (hoveredRow == accountEvent)}">{{accountEvent.comment || 'No comment'}}
+        </td>
+        <td ng-mouseover="mouseOverTd(accountEvent)"
+            ng-show="can('update_user')"
+            ng-class="{highlighted: (hoveredRow == accountEvent)}"
+            data-title="More details" align="center"><a href="#/accounts/{{accountEvent.account_id}}">
+          <i class="fa fa-info fa-lg"></i></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="text-center">
+      <ul class="pagination">
+        <li>
+          <a href="" ng-click="pagination('1')">{{'FIRST' | translate}}</a>
+        </li>
+        <li>
+          <a href="" ng-click="pagination('less')">
+            <</a>
+        </li>
+        <li class="active">
+          <a href="">{{currentPage}}</a>
+        </li>
+        <li>
+          <a href="" ng-click="pagination('more')">></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,317 @@
+<div class="container">
+  </br>
+  </br>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 toppad">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">CT box {{individualMeter.serial}}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12 col-lg-12">
+              <table class="table table-user-information">
+                <tbody>
+                <tr>
+                  <td>{{'SERIAL' | translate}}</td>
+                  <td><a href="#" editable-text="individualMeter.serial">{{individualMeter.serial}}</a></td>
+                </tr>
+                <tr>
+                  <td>{{'RADIO_IDENTIFIER' | translate}}</td>
+                  <td><a href="#"
+                         editable-text="individualMeter.radio_identifier">{{individualMeter.radio_identifier}}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'LAST_CONNECTION' | translate}} (UTC)</td>
+                  <td>
+                    {{individualMeter.last_connection*1000 | date:'dd-MM-yyyy HH:mm:ss':'UTC'}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'MECHANICAL_INDEX' | translate}} (L)</td>
+                  <td>
+                    {{individualMeter.last_index}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'OFFSET' | translate}}</td>
+                  <td>
+                    <a href="#" editable-number="individualMeter.offset">{{individualMeter.offset}}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'MECHANICAL_INDEX' | translate}} ({{'WATER_INDEX' | translate}} + {{'OFFSET' | translate}})</td>
+                  <td>
+                    <a href="#" editable-number="individualMeter.offset">{{individualMeter.last_index +
+                      individualMeter.offset}}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'STATE' | translate}}</td>
+                  <td ng-show="individualMeter.valve_status === 1">
+                    {{'OPEN' | translate}}
+                  </td>
+                  <td ng-show="individualMeter.valve_status === 0">
+                    {{'CLOSED' | translate}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>ID</td>
+                  <td ng-show="individualMeter.account_id !== null">
+                    <a href="#" editable-text="individualMeter.account_id">{{individualMeter.account_id}}
+                      <a href="#/accounts/{{individualMeter.account_id}}">Link</a></td>
+                  <td ng-show="individualMeter.account_id === null">
+                    <a href="#" editable-text="individualMeter.account_id">unasssigned</a>
+                  </td>
+                </tr>
+                <tr ng-show="can('join_account')">
+                  <td>{{'NAME' | translate}}</td>
+                  <td ng-show="individualMeter.account_id !== null">{{individualMeter.accountName}}
+                    <button class="btn btn-default" ng-hide="linkAccount" ng-click="showAccount()">
+                      {{'LINK' | translate}}
+                    </button>
+                    <select name="singleSelect" ng-show="linkAccount" class="form-control" ng-model="data.singleSelect">
+                      <option ng-repeat="account in accounts" value="{{account.id}}">{{account.first_name}} &nbsp;
+                        {{account.last_name}}
+                      </option>
+                    </select><br>
+                    <button ng-show="linkAccount" class="btn btn-success"
+                            ng-click="updateAccount(data.singleSelect)">{{'SAVE' | translate}}
+                    </button>
+                  </td>
+                  <td ng-show="individualMeter.account_id === null">
+                    <button class="btn btn-default" ng-hide="linkAccount" ng-click="showAccount()">
+                      {{'LINK' | translate}}
+                    </button>
+                    <select name="singleSelect" ng-show="linkAccount" class="form-control" ng-model="data.singleSelect">
+                      <option ng-repeat="account in accounts" value="{{account.id}}">{{account.first_name}} &nbsp;
+                        {{account.last_name}}
+                      </option>
+                    </select><br>
+                    <button ng-show="linkAccount" class="btn btn-success"
+                            ng-click="updateAccount(data.singleSelect)">{{'SAVE' | translate}}
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'FIRMWARE' | translate}}</td>
+                  <td>
+                    <a href="#" editable-text="individualMeter.firmware">{{individualMeter.firmware}}</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <span>
+              <a href="" class="btn btn-lg btn-success" ng-click="saveMeter()" ng-show="can('update_meter')">{{'SAVE' | translate}}</a>
+                <!--<a href="" class="btn btn-lg btn-danger" ng-click="deleteMeter()">Delete</a> -->
+            </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container well" ng-show="can('send_message')">
+  <div class="row">
+    <a data-toggle="tooltip" type="button" ng-click="modal('sendOpenValveMessage')" class="btn btn btn-info btn">
+      {{'OPEN_VALVE' | translate}}</a>
+    <a data-toggle="tooltip" type="button" ng-click="modal('sendCloseValveMessage')" class="btn btn btn-info">
+      {{'CLOSE_VALVE' | translate}}
+    </a>
+    <a data-toggle="tooltip" type="button" ng-click="modal('updateIndexCeiling')" class="btn btn btn-info">
+      {{'UPDATE_CEILING' | translate}}
+    </a>
+    <a data-toggle="tooltip" type="button" ng-click="modal('setWakeupFrequency')" class="btn btn btn-info">
+      {{'SET_FREQUENCY' | translate}}</a>
+    <a data-toggle="tooltip" type="button" ng-click="modal('clearQueue')" class="btn btn btn-info">
+      {{'CLEAR' | translate}}
+    </a>
+  </div>
+</div>
+<div class="container" ng-show="modalActive">
+  <div class="row">
+    <div class="col-sm-4 col-md-4 user-details">
+      <div class="user-info-block">
+        <form class="form-inline">
+          <div class="form-group" ng-show="needPayload">
+            <label for="payload">{{'PAYLOAD' | translate}}</label>
+            <input type="number" class="form-control" id="payload" placeholder="{{placeHolderPayload}}"
+                   ng-model="payload">
+          </div>
+          <button type="submit" class="btn btn-success" ng-click="sendMessageToMeter()">
+            {{'SEND_MQTT' | translate}}
+          </button>
+          <button type="submit" class="btn btn-warning" ng-click="closeModal()">{{'CANCEL' | translate}}</button>
+        </form>
+        <br/>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="alert alert-{{status}}" ng-show="alert">
+  <strong>{{status}}:</strong> {{message}}
+</div>
+<p ng-show="requestSentToMeterSuccess" class="bg-success">{{'SENT' | translate}}</p>
+<p ng-show="requestSentToMeterFail" class="bg-warning">{{'SENT_FAIL' | translate}}</p>
+<div class="container" ng-show="can('meter_details')">
+  </br>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-3 pull-right">
+      <form action="" class="search-form">
+        <div class="form-group has-feedback">
+          <label for="search" class="sr-only">{{'SEARCH' | translate}}</label>
+          <input type="text" class="form-control" name="search" id="search" placeholder="search" ng-model="searchText">
+          <span class="fa fa-search form-control-feedback"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-login">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-6">
+              <a href="#" class="active" id="receive-form-link">{{'RECEIVED' | translate}}</a>
+            </div>
+            <div class="col-xs-6">
+              <a href="#" id="send-form-link">{{'SENT' | translate}}</a>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <form id="receive-form" role="form" style="display: block;">
+                <div class="row">
+                  <div id="no-more-tables">
+                    <table class="col-md-11 table-bordered table-striped table-condensed cf">
+                      <thead class="cf">
+                      <tr class="th-blue">
+                        <th class="numeric">{{'SIGNAL_DATE' | translate}} (UTC)</th>
+                        <th class="numeric">Data</th>
+                        <th>Data rate</th>
+                        <th>SNR</th>
+                        <th>RSSI</th>
+                        <th>Seqn</th>
+                        <!-- <th>Index type</th> -->
+                        <th class="numeric">{{'WATER_INDEX' | translate}} (m³)</th>
+                        <th class="numeric">{{'INDEX_CEILING' | translate}} (m³)</th>
+                        <th class="numeric">{{'TEMPERATURE' | translate}} (°C)</th>
+                        <!-- <th class="numeric">Valve status (V1)</th> -->
+                        <th class="numeric">{{'STATE' | translate}}</th>
+                        <th class="numeric">{{'FREQUENCY' | translate}}</th>
+                      </tr>
+                      </thead>
+                      <tbody ng-hide="meterMessageData">
+                      <tr>
+                        <td colspan="30" align="center">{{'WAITING_FOR_API' | translate}}</td>
+                      </tr>
+                      </tbody>
+                      <tbody ng-show="meterMessageData">
+                      <tr ng-repeat="object in meterMessageData | filter:searchText">
+                        <td data-title="Signal date">{{object.timestamp*1000 | date:'dd-MM-yyyy HH:mm:ss':'UTC'}}</td>
+                        <td data-title="Data">{{object.decodedData}}</td>
+                        <td data-title="datr">{{object.message.datr}}</td>
+                        <td data-title="lsnr">{{object.message.lsnr}}</td>
+                        <td data-title="rssi">{{object.message.rssi}}</td>
+                        <td data-title="seqn">{{object.message.seqn}}</td>
+                        <td data-title="Water index">{{object.water_index}}</td>
+                        <td data-title="Index ceiling">{{object.index_ceiling}}</td>
+                        <td data-title="Temperature">{{object.temperature}}</td>
+                        <td data-title="Valve status" class="numeric" ng-show="object.valve_status === 1">{{'1' |
+                          translate}}
+                        </td>
+                        <td data-title="Valve status" class="numeric" ng-show="object.valve_status === 0">
+                          {{'0' | translate}}
+                        </td>
+                        <td data-title="Valve status" class="numeric"
+                            ng-show="object.valve_status != 0 && object.valve_status != 1 && object.valve_status === null">
+                          {{'NO_STATUS' | translate}}
+                        </td>
+                        <td data-title="Valve status" class="numeric" ng-show="object.valve_status != 0 && object.valve_status != 1
+                          && object.valve_status != null">n/a
+                        </td>
+                        <td data-title="Index type">{{object.wake_up_frequency}}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center">
+                      <ul class="pagination">
+                        <li>
+                          <a href="" ng-click="pagination('1')">{{'FIRST' | translate}}</a>
+                        </li>
+                        <li>
+                          <a href="" ng-click="pagination('less')">
+                            <</a>
+                        </li>
+                        <li class="active">
+                          <a href="">{{paginationCurrent}}</a>
+                        </li>
+                        <li>
+                          <a href="" ng-click="pagination('more')">></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <form id="send-form" style="display: none;">
+                <div class="container">
+                  <div class="row">
+                    <div id="no-more-tables">
+                      <table class="col-md-11 table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
+                        <tr class="th-blue">
+                          <th class="numeric">{{'SIGNAL_DATE' | translate}} (UTC)</th>
+                          <th>{{'TYPE' | translate}}</th>
+                          <th>{{'PAYLOAD' | translate}}</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-hide="metersSent">
+                        <tr>
+                          <td colspan="30" align="center">{{'WAITING_FOR_API' | translate}}</td>
+                        </tr>
+                        </tbody>
+                        <tbody ng-show="metersSent">
+                        <tr ng-repeat="sent in metersSent | filter:searchText">
+                          <td data-title="Signal date">{{sent.timestamp*1000 | date:'dd-MM-yyyy HH:mm:ss':'UTC'}}</td>
+                          <td data-title="Type of message">{{sent.type_of_message}}</td>
+                          <td data-title="payload" ng-if="sent.payload">{{sent.payload}}</td>
+                          <td data-title="payload" ng-if="!sent.payload">No Payload</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="text-center">
+                        <ul class="pagination">
+                          <li>
+                            <a href="" ng-click="paginationSent('1')">{{'FIRST' | translate}}</a>
+                          </li>
+                          <li>
+                            <a href="" ng-click="paginationSent('less')">
+                              <</a>
+                          </li>
+                          <li class="active">
+                            <a href="">{{paginationCurrent}}</a>
+                          </li>
+                          <li>
+                            <a href="" ng-click="paginationSent('more')">></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<br/>
+<br/>

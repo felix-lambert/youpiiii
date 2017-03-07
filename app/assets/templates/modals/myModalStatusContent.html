@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">{{'EDIT_PAYMENT' | translate}}
+  </h3>
+</div>
+<div class="modal-body" id="modal-body">
+<p>{{'ENABLE_PAYMENT' | translate}}</p>
+
+<div data-title="Payment enabled" class="numeric" ng-class="{'color-red': account.payment_enabled === 'No', 'color-green': account.payment_enabled === 'Yes'}"><div class='wrapper text-center'>
+  <div class="btn-group">
+    <label class="btn btn-default m-row" ng-model="account.payment_enabled" ng-click="getVal(object.id, 1)" uib-btn-radio="'Yes'" uncheckable>{{'YES' | translate}}</label>
+
+    <label ng-click="getVal(object.id, 0)" class="btn btn-default" ng-model="account.payment_enabled" uib-btn-radio="'No'" uib-uncheckable="uncheckable">{{'NO' | translate}}</label>
+  </div>
+  </div>
+</div>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
+</div>

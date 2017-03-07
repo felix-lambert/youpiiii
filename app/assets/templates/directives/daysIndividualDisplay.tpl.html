@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div ng-well value="cash" title="'FINANCIAL' | translate" name="'MONEY_COLLECTED' | translate" class="well-green" name-position="well-green-p"></div>
+    <br/>
+    <div class="row">
+      <div class="col-sm-12">
+        <div ng-well value="water" title="'CONSUMPTION' | translate" name="'DASHBOARD_WATER' | translate" class="well-blue" name-position="well-blue-p"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="well-dark-blue">
+      <h2 class="text-info"><b>{{'CUSTOMERS' | translate}}</b></h2>
+      <div class="row text-info">
+        <div class="col-sm-12">
+          <div class="col-sm-3 text-center">
+            <strong> <div class="content-size"><i class="fa fa-user-o"></i></div></strong>
+          </div>
+          <div class="col-sm-5 text-center">
+            <strong><div class="content-size">20</div></strong>
+          </div>
+          <div class="col-sm-4">
+            <p class="text-center well-dark-blue-p"><strong>{{'CUSTOMERS_NUMBER' | translate}}</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="row icon">
+        <div class="col-sm-12">
+          <div class="col-sm-3 text-center">
+            <strong> <div class="content-size"><i class="fa fa-lock"></i></div></strong>
+          </div>
+          <div class="col-sm-5 text-center">
+            <strong><div class="content-size">{{disconnect}}</div></strong>
+          </div>
+          <div class="col-sm-4">
+            <p class="text-center well-dark-blue-p"><strong>{{'DASHBOARD_DISCONNECTED' | translate}}</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="row icon">
+        <div class="col-sm-12">
+          <div class="col-sm-3 text-center">
+            <strong> <div class="content-size"><i class="fa fa-clock-o"></i></div></strong>
+          </div>
+          <div class="col-sm-5 text-center">
+          
+            <strong><div class="content-size">{{disconnectTime}}</div></strong>
+          </div>
+          <div class="col-sm-4">
+            <p class="text-center well-dark-blue-p"><strong>{{'DASHBOARD_DURATION_DISCONNECTIONS' | translate}}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row">
+    <div>
+      <form name="myForm" novalidate autocomplete="off">
+        <input style="display:none" type="email" name="fakeusernameremembered"/>
+        <input style="display:none" type="password" name="fakepasswordremembered"/>
+        <div class="form-group">
+          <label for="name" class="cols-sm-2 control-label">{{'FIRST_NAME' | translate}}</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+              <input type="text" ng-model="json.first_name" class="form-control" name="name" id="name"  placeholder="Enter your Name" ng-maxlength="50" required>
+            </div>
+            <div ng-messages="myForm.name.$error" style="color:maroon" role="alert">
+              <div ng-message="required">Please enter your name</div>
+              <div ng-message="minlength">Your name is too long</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="username" class="cols-sm-2 control-label">{{'LAST_NAME' | translate}}</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+              <input type="text" class="form-control" ng-model="json.last_name" name="lastname" id="username"  placeholder="{{'LAST_NAME' | translate}}" ng-maxlength="50" required/>
+            </div>
+            <div ng-messages="myForm.lastname.$error" style="color:maroon" role="alert">
+              <div ng-message="required">Please enter your last name</div>
+              <div ng-message="minlength">Your name is too long</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="cols-sm-2 control-label">{{'EMAIL' | translate}}</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+              <input type="email" class="form-control" ng-model="json.email" name="email" id="email"  placeholder="{{'EMAIL' | translate}}" ng-maxlength="50" required/>
+            </div>
+            <div ng-messages="myForm.email.$error" style="color:maroon" role="alert">
+              <div ng-message="required">Please enter your email</div>
+              <div ng-message="maxlength">Your name is too long</div>
+              <div ng-message="email">Must be a valid email</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="cols-sm-2 control-label">{{'PASSWORD' | translate}}</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+              <input type="password" class="form-control" ng-model="json.password" name="password" id="password"  placeholder="{{'PASSWORD' | translate}}" ng-minlength="6" ng-maxlength="20" required/>
+            </div>
+            <div ng-messages="myForm.password.$error" style="color:maroon" role="alert">
+              <div ng-message="required">Please enter your password</div>
+              <div ng-message="maxlength">Your password is too long</div>
+              <div ng-message="minlength">Your password is too short</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="cols-sm-2 control-label">{{'PERMISSION' | translate}}</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+                <ui-select ng-model="json.permission" theme="selectize" style="width: 280px;" title="Choose a role" append-to-body="true">
+                  <ui-select-match placeholder="Select or a role in the list...">{{$select.selected.role}}</ui-select-match>
+
+                  <ui-select-choices repeat="permission in permissions | filter: $select.search">
+                    <span ng-bind-html="permission.role | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="cols-sm-2 control-label">{{'LANGUAGE' | translate}}</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+                <ui-select ng-model="json.languages" theme="selectize" style="width: 280px;" title="Choose a language" append-to-body="true">
+                  <ui-select-match placeholder="Select or a language in the list...">{{$select.selected.language}}</ui-select-match>
+                  <ui-select-choices repeat="lang in languages | filter: $select.search">
+                    <span ng-bind-html="lang.language | highlight: $select.search"></span>
+                  </ui-select-choices>
+                </ui-select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" ng-click="saveUser()" ng-disabled="myForm.$invalid" class="btn btn-primary btn-lg btn-block login-button">{{'SAVE' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

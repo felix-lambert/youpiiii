@@ -1,0 +1,95 @@
+<div class="container">
+  </br>
+  </br>
+  <div class="row">
+    <div
+        class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title"><a href="#" editable-text="json.first_name">{{ json.first_name || "empty" }}
+            {{ json.last_name || "empty" }}</a></h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12 col-lg-12">
+              <table class="table table-user-information">
+                <tbody>
+                <tr>
+                  <td>{{'FIRST_NAME' | translate}}:</td>
+                  <td><a href="#" editable-text="json.first_name">{{ json.first_name || "empty" }}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'LAST_NAME' | translate}}:</td>
+                  <td><a href="#" editable-text="json.last_name">{{ json.last_name || "empty" }}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'EMAIL' | translate}}</td>
+                  <td><a href="#" editable-email="json.email">{{ json.email || "empty" }}</a></td>
+                </tr>
+                <tr ng-show="can('updateRole')">
+                  <td>{{'ROLE' | translate}}</td>
+                  <td>
+                    <select name="repeatSelect" id="repeatSelect" ng-model="json.role">
+                      <option ng-repeat="permission in permissions" value="{{permission.role}}">{{permission.role}}
+                      </option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'UPDATED_AT' | translate}} (UTC)</td>
+                  <td>
+                    {{ json.updated_at | date  : "fullDate"}}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <a href="" class="btn btn-primary" ng-click="saveUser()">{{'SAVE' | translate}}</a>
+              <a href="" class="btn btn-primary" ng-click="deleteUser()">{{'DELETE' | translate}}</a>
+              <a href="" class="btn btn-primary" ng-click="showPasswordModal()"
+                 ng-show="buttonShowPasswordModal">{{'UPDATE_PASSWORD' | translate}}</a>
+              <a href="" class="btn btn-primary" ng-click="submitUserId()"
+                 ng-show="buttonShowApiTokenModal">{{'GENERATE' | translate}}</a>
+              <div ng-show="passwordModal">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <input type="password" class="form-control" placeholder="new password"
+                           ng-model="newPassword" required>
+                  </div>
+                  <button type="submit" class="btn btn-success" ng-click="submitPassword()">{{'SAVE' | translate}}
+                  </button>
+                  <a href="" ng-click="hidePasswordModal()">
+                    <button class="btn btn-warning">{{'CANCEL' | translate}}</button>
+                  </a>
+                </form>
+              </div>
+              <p ng-show="changePasswordSuccess" class="bg-success">{{'UPDATE_PASSWORD_SUCCESS' | translate}}</p>
+              <p ng-show="changePasswordFail" class="bg-warning">{{'UPDATE_PASSWORD_FAILED' | translate}}</p>
+              <p ng-show="changeApiTokenSuccess" class="bg-success">{{'GENERATE_SUCCESS' | translate}}</p>
+              <p ng-show="changeApiTokenFail" class="bg-warning">{{'GENERATE_FAILED' | translate}}</p>
+              <div class="alert alert-{{status}}" ng-show="alert">
+                <strong>{{status}} :</strong> {{message}}
+              </div>
+              <div ng-show="changeApiTokenSuccess">
+                <textarea id="to-copy">{{token}}</textarea>
+                <button type="button" id="copy" class="btn btn-default">{{'COPY' | translate}}</button>
+                <button type="button" ng-click="changeApiTokenSuccess = false" class="btn btn-default">{{'CLOSE_MODAL' | translate}}
+                </button>
+                <script>
+                  var toCopy  = document.getElementById('to-copy'),
+                      btnCopy = document.getElementById('copy');
+                  btnCopy.addEventListener('click', function() {
+                    toCopy.select();
+                    document.execCommand('copy');
+                    return false;
+                  });
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

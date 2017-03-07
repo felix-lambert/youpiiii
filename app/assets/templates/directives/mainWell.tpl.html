@@ -1,0 +1,59 @@
+<div class="well-middle-blue">
+  <h2 class="text-info"><b>{{'STATUS' | translate}}</b></h2>
+  <div class="row">
+    <div class="text-info col-sm-4 text-center">
+      
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="col-sm-6 col-sm-push-1">
+            <strong> <div class="status-size"><i class="fa fa-database"></i></div></strong>
+          </div>
+          <div class="col-sm-6 col-sm-pull-1">
+            <strong><div class="status-size">{{currentCreditSum || 0}}</div></strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-sm-push-1">
+            <strong>{{'WORKING_CAPITAL' | translate}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-info col-sm-4 text-center">
+      
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="col-sm-6 col-sm-push-2">
+            <strong><div class="status-size"><i class="fa fa-ban"></i></div></strong>
+          </div>
+          <div class="col-sm-6 col-sm-pull-2">
+            <strong><div class="status-size">{{disconnected || 0}}</div> </strong>
+          </div>
+          
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <strong>{{'DASHBOARD_DISCONNECTED' | translate}}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="text-info col-sm-4 text-center">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="col-sm-6 col-sm-push-2">
+            <strong><div class="status-size"><i class="fa fa-exclamation-triangle"></i></div></strong>
+          </div>
+          <div class="col-sm-6 col-sm-pull-2">
+            <strong><div class="status-size">{{lowCredit || 0}}</div> </strong>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <strong>{{'LOW_CREDIT' | translate}}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

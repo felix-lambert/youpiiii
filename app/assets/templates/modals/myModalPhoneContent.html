@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">{{'ADD_PHONE' | translate}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <div>
+    <input type="text" ng-model="attachedPhoneNumberToAdd" class="form-control add-todo" placeholder="+227xxx">
+    <button id="checkAll"  ng-click="addAttachedPhoneNumber(attachedPhoneNumberToAdd)" class="btn btn-success">{{'ADD_PHONE' | translate}}</button>
+    <hr>
+    <ul id="sortable" class="list-unstyled">
+      <li class="ui-state-default">
+        <div class="checkbox" ng-repeat="attached_phone_number in attached_phone_numbers">
+          <label>
+            <i class="fa fa-phone"></i>
+            {{attached_phone_number.phone_number}} <a href="" ng-click="deleteAttachedPhoneNumber(attached_phone_number.id)"> {{'DELETE' | translate}}</a>
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning" type="button" ng-click="cancel()">{{'CLOSE' | translate}}</button>
+</div>
+</div>

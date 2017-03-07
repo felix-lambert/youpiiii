@@ -1,0 +1,29 @@
+{
+  "name": "ct-cloud-web-api",
+  "description": "CityTaps client",
+  "main": "",
+  "authors": [
+    "Thomas Lim"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-resource": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "x-editable": "^1.5.1",
+    "ui-bootstrap": "^2.2.0",
+    "angular-moment": "^1.0.0"
+  },
+  "devDependencies": {
+    "angular-translate": "^2.13.1",
+    "angular-translate-loader-static-files": "^2.13.1"
+  }
+}

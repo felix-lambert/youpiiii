@@ -1,0 +1,189 @@
+</br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="pull-left">
+        <div class="form-group">
+          <div class="icon-addon addon-sm input-search-account">
+            <input type="text" placeholder="{{'ACCOUNT_SEARCH' | translate}}" class="form-control input-search-account"
+                   name="search" id="search" ng-model="searchText">
+            <label for="search" class="fa fa-search" rel="tooltip" title="email"></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="pull-right action-call-button-space" ng-show="can('add_account')">
+        <small><a ng-click="refreshButton()">
+          <button type="button" class="btn btn-default" aria-label="Refresh data">
+            <span><i class="fa fa-refresh"></i></span>
+          </button>
+        </a></small>
+      </div>
+
+      <div class="pull-right action-call-button-space" ng-show="can('change_customer_view')">
+        <small>
+          <button type="button" class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{viewNameButton}}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li ng-repeat="accountAcl in accountAclTab"><a href="" ng-click="accountView(accountAcl.viewLocalStorage)">{{accountAcl.viewName}}</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li><a href="" ng-click="saveThisView()">{{'ACCOUNT_DEFAULT_PAGE' | translate}}</a></li>
+          </ul>
+        </small>
+      </div>
+
+      <div class="pull-right action-call-button-space" ng-show="can('add_account')">
+        <small><a href="/#/accounts/new">
+          <button type="button" class="btn btn-default" aria-label="Left Align">
+            <span><i class="fa fa-plus"></i> {{'ADD_ACCOUNT' | translate}}</span>
+          </button>
+        </a></small>
+      </div>
+
+  </div>
+</div>
+<div class="well-blue-table">
+  <div class="row center-block">
+    <table class="col-md-12 table-striped table-condensed cf table-scrollable"
+      ng-mouseleave="hoveredCol = null; hoveredRow = null">
+      <thead>
+        <tr class="th-blue">
+          <th ng-show="accountAclTab[view].cin">CIN</th>
+          <th ng-show="accountAclTab[view].safege">SAFEGE</th>
+          <th ng-show="accountAclTab[view].name">{{'NAME' | translate}}</th>
+          <th ng-show="accountAclTab[view].balance" align="center">{{'BALANCE' | translate}}
+            <small>{{'MONEY_UNIT' | translate}}</small>
+          </th>
+          <th class="theader-size" ng-show="accountAclTab[view].volumeConsummed" align="center">{{'VOLUME_CONSUMMED' | translate}}
+            <small>(m&sup3;)</small>
+          </th>
+          <th class="theader-size" ng-show="accountAclTab[view].cycleConsumption" align="center">{{'PRICE' | translate}}
+            <small>(FCFA/m&sup3;)</small>
+          </th>
+          <th class="theader-size" ng-show="accountAclTab[view].serialNumber" align="center">{{'SERIAL_NUMBER' | translate}}</th>
+          <th class="theader-size" ng-show="accountAclTab[view].valveState">{{'STATE' | translate}}</th>
+          <th class="theader-size" ng-show="accountAclTab[view].lastBoxMessage">{{'LAST_MESSAGE' | translate}}</th>
+          <th class="theader-size" ng-show="accountAclTab[view].mechanicalIndex">{{accountAclTab[view].indexName}}
+            <small>(m&sup3;)</small>
+          </th>
+          <th ng-show="accountAclTab[view].softwareIndex"> {{'SOFTWARE_INDEX' | translate}}
+            <small>(m&sup3;)</small>
+          </th>
+          <th ng-show="accountAclTab[view].indexCeiling" align="center"> {{'INDEX_CEILING' | translate}}
+            <small>(m&sup3;)</small>
+          </th>
+          <th class="theader-size" ng-show="accountAclTab[view].details && can('accountDetails')"> {{'DETAILS' | translate}}</th>
+        </tr>
+      </thead>
+      <tbody ng-hide="json">
+        <tr>
+          <td colspan="30" align="center">{{'WAITING_FOR_API' | translate}}</td>
+        </tr>
+      </tbody>
+      <tbody ng-show="json">
+        <tr ng-repeat="object in json | filter: searchText | orderBy: ['-test_account != 1','-payment_enabled','valve_status','current_credit > 350','utility_identifier']"
+          ng-mouseover="mouseOverTd(object)"
+          ng-click="showDetails(object.id)"
+          ng-if="accountAclTab[view].accountTest || object.test_account !== 1">
+          <td data-title="CIN"
+            ng-show="accountAclTab[view].cin"
+            ng-class="{highlighted: (hoveredRow == object)}">{{object.id}}
+          </td>
+          <td data-title="SAFEGE"
+            ng-show="accountAclTab[view].safege && object.utility_identifier"
+            ng-class="{highlighted: (hoveredRow == object)}">{{object.utility_identifier}}
+          </td>
+          <td data-title="SAFEGE"
+            ng-show="accountAclTab[view].safege && !object.utility_identifier"
+            ng-class="{highlighted: (hoveredRow == object)}">{{'NO_SAFEGE' | translate}}
+          </td>
+          <td data-title="Name"
+            ng-show="accountAclTab[view].name"
+            ng-class="{highlighted: (hoveredRow == object)}">
+            <span ng-show="object.first_name">{{object.first_name + ' ' + object.last_name}}</span>
+            <span ng-hide="object.first_name">{{'NO_NAME' | translate}}</span>
+          </td>
+          <td data-title="Balance"
+            ng-show="accountAclTab[view].balance"
+            ng-class="{highlighted: (hoveredRow == object)}"
+            class="numeric">
+            <span ng-show="object.payment_enabled && object.current_credit !== null">
+              {{object.current_credit_with_space}}
+              <span class="badge" ng-show="object.current_credit < 350" ng-class="{'color-orange-badge': object.current_credit > 0,'color-red-badge': object.current_credit <= 0}"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+            </span>
+            <span ng-show="!object.payment_enabled">{{'DISABLED' | translate}}</span>
+          </td>
+          <td data-title="Volume left"
+            ng-show="accountAclTab[view].volumeConsummed"
+            ng-class="{highlighted: (hoveredRow == object)}" class="numeric" align="char" char=".">
+            <span
+              ng-show="(object.cycle_cumulated_consumption) / 1000 >= 0 && object.payment_enabled">
+              {{(object.cycle_cumulated_consumption) / 1000  | number: 0}}
+            </span>
+            <span ng-show="(object.cycle_cumulated_consumption) / 1000 < 0">
+              0
+            </span>
+            <span ng-show="!object.payment_enabled">
+              N/A
+            </span>
+          </td>
+          <td data-title="Current price"
+            ng-show="accountAclTab[view].cycleConsumption"
+            ng-class="{highlighted: (hoveredRow == object)}"
+            class="numeric">
+            <span>{{ deductCurrentPrice(object.cycle_cumulated_consumption).price}}</span>
+          </td>
+          <td data-title="Box serial number"
+            ng-show="accountAclTab[view].serialNumber && object.meters[0]"
+            ng-class="{highlighted: (hoveredRow == object)}" class="numeric">
+            <span ng-show="object.meters[0].serial">{{object.meters[0].serial  | number: 0}}</span>
+          </td>
+          <td data-title="Valve state"
+            ng-show="object.meters[0] && accountAclTab[view].valveState"
+            ng-class="{highlighted: (hoveredRow == object)}">
+            <span ng-show="object.valve_status">{{object.valve_status}} <span class="badge color-red-badge" ng-show="object.valve_status === 'Closed'"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></span>
+          </td>
+          <td data-title="last connection"
+            ng-show="object.meters[0]  && accountAclTab[view].lastBoxMessage"
+            ng-class="{highlighted: (hoveredRow == object)}">
+            <span am-time-ago="object.meters[0].last_connection * 1000"></span>
+            <span class="badge" ng-show="(object.backgroundImageInfo === 'orange')  || (object.backgroundImageInfo === 'red')" ng-class="{'color-orange-badge': (object.backgroundImageInfo === 'orange'),'color-red-badge': (object.backgroundImageInfo === 'red')}"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+          </td>
+          <td data-title="Mechanical Index"
+            ng-show="object.meters[0]  && accountAclTab[view].mechanicalIndex"
+            ng-class="{highlighted: (hoveredRow == object)}" class="numeric">
+            <span ng-show="object.meters[0].last_index != null">{{(object.meters[0].last_index + object.meters[0].offset) / 1000 | number: 3}}</span>
+          </td>
+          <td data-title="Software Index"
+            ng-show="object.meters[0]   && accountAclTab[view].softwareIndex"
+            ng-class="{highlighted: (hoveredRow == object)}" class="numeric">
+            <span
+            ng-show="object.meters[0].last_index != null">{{object.meters[0].last_index / 1000 | number: 3}}</span>
+          </td>
+          <td data-title="Index Ceiling"
+            ng-show="object.meters[0] && accountAclTab[view].indexCeiling"
+            ng-class="{highlighted: (hoveredRow == object)}" class="numeric">
+            <span
+            ng-show="object.meters[0].index_ceiling != null">{{object.meters[0].index_ceiling / 1000 | number: 3}}</span>
+          </td>
+          <td colspan={{accountAclTab[view].colspan}}
+            align=center
+            ng-class="{highlighted: (hoveredRow == object)}"
+            ng-hide="object.meters[0]">
+            {{'NO_BOX_ATTACHED' | translate}}
+          </td>
+          <td ng-class="{highlighted: (hoveredRow == object)}"
+            ng-show="can('accountDetails')  && accountAclTab[view].details"
+            data-title="More details" align="center"><a href="#/accounts/{{object.id}}">
+            <i class="fa fa-info fa-lg more-info"></i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

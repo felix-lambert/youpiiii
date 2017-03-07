@@ -1,0 +1,135 @@
+<div class="container">
+  </br>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="pull-left">
+        <div class="form-group">
+          <div class="icon-addon addon-sm input-search-account">
+            <input type="text" placeholder="{{'ACCOUNT_SEARCH' | translate}}" class="form-control input-search-account"
+                   name="search" id="search" ng-model="searchText">
+            <label for="search" class="fa fa-search" rel="tooltip" title="email"></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="pull-right action-call-button-space">
+        <button type="button" class="btn btn-default" ng-click="refreshButton()" aria-label="Refresh data"
+                data-toggle="tooltip" data-placement="bottom" title="Refresh data" onclick="this.blur();">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="pull-right action-call-button-space">
+        <small><a href="/#/meters/new">
+          <button type="button" class="btn btn-default" aria-label="Left Align">
+            <span>{{'ADD' | translate}} CT box</span>
+          </button>
+        </a></small>
+      </div>
+
+    </div>
+  </div>
+
+    <div class="well-blue-table">
+    <div class="row center-block">
+      <table class="col-md-12 table-striped table-condensed cf"
+             ng-mouseleave="hoveredCol = null; hoveredRow = null">
+        <thead>
+        <tr class="th-blue">
+          <th>
+            <button ng-click="sortBy('serial')" class="btn btn-default">{{'SERIAL' | translate}}</button>
+            <span class="sortorder" ng-show="propertyName === 'serial'" ng-class="{reverse: reverse}"></span>
+          </th>
+          <th>
+            <button ng-click="sortBy('radio_identifier')" class="btn btn-default">{{'RADIO_IDENTIFIER' | translate}}</button>
+            <span class="sortorder" ng-show="propertyName === 'radio_identifier'" ng-class="{reverse: reverse}"></span>
+          </th>
+          <th>
+            <button ng-click="sortBy('last_connection')" class="btn btn-default">{{'LAST_CONNECTION' | translate}} (UTC)</button>
+            <span class="sortorder" ng-show="propertyName === 'last_connection'" ng-class="{reverse: reverse}"></span>
+          </th>
+          <th>
+            <button ng-click="sortBy('last_index')" class="btn btn-default">{{'MECHANICAL_INDEX' | translate}} (L)</button>
+            <span class="sortorder" ng-show="propertyName === 'last_index'" ng-class="{reverse: reverse}"></span>
+          </th>
+          <th>
+            <button ng-click="sortBy('valve_status')" class="btn btn-default">{{'STATE' | translate}}</button>
+            <span class="sortorder" ng-show="propertyName === 'valve_status'" ng-class="{reverse: reverse}"></span>
+          </th>
+          <th>
+            <button ng-click="sortBy('account_id')" class="btn btn-default">{{'ACCOUNT' | translate}} ID</button>
+          </th>
+          <th ng-show="can('update_meter')">{{'DETAILS' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody ng-hide="meters">
+        <tr>
+          <td colspan="30" align="center">{{'WAITING_FOR_API' | translate}}</td>
+        </tr>
+        </tbody>
+        <tbody ng-show="meters">
+        <tr ng-repeat="meter in meters | filter:searchText" ng-click="showDetails(meter.serial)">
+          <td data-title="Serial Id"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-class="{highlighted: (hoveredRow == meter)}">{{meter.serial}}</td>
+          <td data-title="LoRa MAC"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-class="{highlighted: (hoveredRow == meter)}">{{meter.radio_identifier}}</td>
+          <td data-title="Last connection (UTC)"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-class="{highlighted: (hoveredRow == meter)}">{{meter.last_connection*1000 | date:'dd/MM/yyyy HH:mm:ss'}}
+          </td>
+          <td data-title="Water index" class="numeric"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-show="meter.last_index || meter.last_index == 0"
+              ng-class="{highlighted: (hoveredRow == meter)}">{{meter.last_index}}
+          </td>
+          <td data-title="Water index" class="numeric"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-show="!meter.last_index && meter.last_index != 0"
+              ng-class="{highlighted: (hoveredRow == meter)}">{{'NO_WATER_INDEX' | translate}}
+          </td>
+          <td data-title="Valve status"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-show="meter.valve_status === 1"
+              ng-class="{highlighted: (hoveredRow == meter)}">{{'1' | translate}}
+          </td>
+          <td data-title="Valve status"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-show="meter.valve_status === 0"
+              ng-class="{highlighted: (hoveredRow == meter)}">{{'0' | translate}}
+          </td>
+          <td data-title="Valve status"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-show="meter.valve_status != 0 && meter.valve_status != 1 && meter.valve_status === null"
+              ng-class="{highlighted: (hoveredRow == meter)}">{{'NO_STATUS' | translate}}
+          </td>
+          <td data-title="Valve status" class="numeric"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-show="meter.valve_status != 0 && meter.valve_status != 1 && meter.valve_status != null"
+              ng-class="{highlighted: (hoveredRow == meter)}">{{'NO_STATUS' | translate}}
+          </td>
+          <td data-title="Account ID" class="numeric"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-class="{highlighted: (hoveredRow == meter)}"
+              ng-show="meter.account_id || meter.account_id == 0">{{meter.account_id}}
+          </td>
+          <td data-title="Account ID"
+              ng-show="!meter.account_id && meter.account_id != 0"
+              ng-mouseover="mouseOverTd(meter)"
+              ng-class="{highlighted: (hoveredRow == meter)}">
+              {{'NO_ACCOUNT_ID' | translate}}
+          </td>
+          <td ng-mouseover="mouseOverTd(meter)"
+              ng-class="{highlighted: (hoveredRow == meter)}"
+              data-title="Details" align="center"><a href="#/meters/{{meter.serial}}">
+            <i class="fa fa-info fa-lg"></i></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+</div>

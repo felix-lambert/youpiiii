@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="col-md-5 col-md-offset-3">
+    <div class="form-area"  style="background-color: #9FD7EE">
+      <form role="form" name="form">
+        <br style="clear:both">
+        <h3 style="margin-bottom: 25px; text-align: center;">{{'ADD' | translate}} CT box</h3>
+        <div class="form-group">
+          <input type="text" class="form-control" name="serial" placeholder="{{'SERIAL' | translate}}" ng-model="json.serial" required>
+          <div ng-messages="form.serial.$error" style="color:maroon" role="alert">
+            <div ng-message="required">Please enter a serial number</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="lora" placeholder="{{'RADIO_IDENTIFIER' | translate}}" ng-model="json.radio_identifier" required>
+          <div ng-messages="form.lora.$error" style="color:maroon" role="alert">
+            <div ng-message="required">Please enter a radio identifier</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="number" min="0" class="form-control" name="offset" placeholder="{{'OFFSET' | translate}}" ng-model="json.offset" required>
+          <div ng-messages="form.offset.$error" style="color:maroon" role="alert">
+            <div ng-message="number">Must be a number</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="firmware" placeholder="2.0.0" ng-model="json.firmware" required>
+          <div ng-messages="form.firmware.$error" style="color:maroon" role="alert">
+            <div ng-message="number">Must be a valid firmware</div>
+          </div>
+        </div>
+
+        <button type="button" id="submit" ng-disabled="form.$invalid" ng-click="saveMeter()" class="btn btn-primary pull-right">{{'SAVE' | translate}}</button>
+      </form>
+    </div>
+  </div>
+</div>

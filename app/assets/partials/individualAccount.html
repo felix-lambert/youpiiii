@@ -1,0 +1,323 @@
+<div class="container">
+  <h3 class="main-title"><strong>SAFEGE: {{json.utility_identifier}}</strong></h3>
+  <h4 class="regular subtitle">
+    <strong>
+      {{ json.first_name || "" | uppercase}} {{ json.last_name || "" | uppercase }}
+    </strong>
+  </h4>
+  <br/>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="well-middle-blue">
+        <h2 class="text-info"><b>{{'STATUS' | translate | uppercase}}</b></h2>
+        <div class="row">
+          <div class="text-info col-sm-6 text-center">
+            <div class="row">
+              <div class="col-sm-12" ng-if="json.payment_enabled === 1 || json.payment_enabled === 'Yes'">
+                <div class="col-sm-4">
+                  <strong> 
+                    <div class="status-size"><i class="fa fa-money"></i></div>
+                  </strong>
+                </div>
+                <div class="col-sm-4 col-md-pull-1">
+                  <strong><div class="status-size">{{ current_credit || "0" }}</div></strong>
+                </div>
+                <div class="col-sm-4 well-blue-p col-md-pull-2">
+                  <strong>{{'CREDIT' | translate}} (FCFA)</strong>
+                </div>
+              </div>
+              <div class="col-sm-12" ng-if="json.payment_enabled === 0 || json.payment_enabled === 'No'">
+                <div class="col-sm-2">
+                  <strong> <div class="status-size"><i class="fa fa-close"></i></div></strong>
+                </div>
+                <div class="col-sm-10 col-md-pull-1">
+                  <strong><div class="status-size">{{'DISABLED_PAYMENT' | translate}}</div></strong>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="text-info col-sm-6 text-center">
+            <div class="row">
+              <div class="col-sm-12" ng-if="json.meters[0].valve_status === 0 || json.valve_status === 'No'">
+                <div class="col-sm-2 col-md-push-2">
+                  <strong><div class="status-size"><i class="fa fa-close text-danger"></i></div></strong>
+                </div>
+                <div class="col-sm-10">
+                  <strong><div class="status-size">{{'CLOSED' | translate}}</div> </strong>
+                </div>
+              </div>
+              <div class="col-sm-12" ng-if="json.meters[0].valve_status === 1 || json.valve_status === 'Yes'">
+                <div class="col-sm-4">
+                  <strong><div class="status-size"><i class="fa fa-check"></i></div></strong>
+                </div>
+                <div class="col-sm-8 col-md-pull-1">
+                  <strong><div class="status-size">{{'OPEN' | translate}}</div> </strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="well-green-individual">
+        <h2 class="text-info"><b>{{'BILLING' | translate | uppercase}}</b></h2>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'AMOUNT_LAST_CREDIT_DATE' | translate}} (FCFA)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{amount}} ({{lastDate * 1000 || 'NO_AVAILABLE_DATE' | translate | date:'dd/MM/yyyy '}})</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'CREDIT_LAST_SEVEN_DAYS' | translate}} (FCFA)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{creditSevenLastDays || 'NO_CREDIT' | translate }}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'CREDIT_LAST_MONTH' | translate}} (FCFA)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{creditOneMonth || 'NO_CREDIT' | translate}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'DEBIT_LAST_SEVEN_DAYS' | translate}} (FCFA)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{debitSevenLastDays || 'NO_DEBIT' | translate}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'DEBIT_LAST_MONTH' | translate}} (FCFA)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{debitOneMonth || 'NO_DEBIT' | translate}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'INDIVIDUAL_ACCOUNT_CYCLE_PAID_SUBSCRIPTION' | translate}} (FCFA)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{ json.cycle_paid_subscription || 0}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'SUBSCRIPTION_FEE' | translate}} (FCFA)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{ json.subscription_fee || 0}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'INDIVIDUAL_ACCOUNT_CYCLE_CONSUMPTION' | translate}} (m&sup3;)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{ json.cycle_cumulated_consumption / 1000 || 0}}</strong></p>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <!-- well dark blue -->
+      <div class="well-dark-blue-individual">
+        <h2 class="text-info"><b>{{'CUSTOMER' | translate | uppercase}}</b></h2>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'PHONE' | translate}}</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{ json.contact_phone_number || 'NO_PHONE' | translate }}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>GPS latitude</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{json.gps_lat || 'NO_GPS' | translate}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>GPS longitude</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{json.gps_lon || 'NO_GPS' | translate}}</strong></p>
+          </div>
+        </div>
+        <div ng-hide="hideTable">
+          <div class="panel">
+            <div class="panel-heading">
+              <p class="panel-title"><strong>{{'ATTACHED_PHONE_NUMBER' | translate}}</strong></p>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tbody>
+                  <tr ng-repeat="attached_phone_number in attached_phone_numbers">
+                    <td class="text-left">
+                      <small>
+                      <i class="fa fa-phone"></i>
+                      {{attached_phone_number.phone_number}}
+                      </small>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- well dark blue -->
+    </div>
+    <!-- well blue -->
+    <div class="col-sm-6">
+      <div class="well-blue">
+        <h2 class="text-info"><b>{{'CONSUMPTION' | translate}}</b></h2>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'CONSUMPTION_LAST_SEVEN_DAYS' | translate}} (m&sup3;)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{consumptionSevenLastDays / 1000 || 'NO_CONSUMPTION' | translate}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'CONSUMPTION_LAST_MONTH' | translate}} (m&sup3;)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{consumptionLastMonth / 1000 || "No consumption"}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'WATER_AVAILABLE' | translate}} (m&sup3;)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{(json.meters[0].index_ceiling - json.meters[0].last_index) / 1000 || "No consumption"}}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- well blue -->
+    
+    <!-- well grey -->
+    <div class="col-sm-6">
+      <br/>
+      <div class="well-grey-individual">
+        <h2 class="text-info"><strong>{{'METER' | translate | uppercase}}</strong></h2>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'SERIAL' | translate}}</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{json.meters[0].serial || 'NO_SERIAL' | translate}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'RADIO_IDENTIFIER' | translate}}</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{json.meters[0].radio_identifier || 'NO_RADIO_IDENTIFIER' | translate}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'LAST_MESSAGE' | translate}}</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{json.meters[0].last_connection * 1000 || 'NO_AVAILABLE_DATE' | translate  |
+            date:'dd-MM-yyyy HH:mm:ss':'UTC'}}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'MECHANICAL_INDEX' | translate}} (m&sup3;)</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{(json.meters[0].last_index + json.meters[0].offset) / 1000 || 'NO_INDEX' | translate }}</strong></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7">
+            <p class="text-info"><strong>{{'TEMPERATURE' | translate}}</strong></p>
+          </div>
+          <div class="col-sm-5">
+            <p class="text-center text-info"><strong>{{json.meters[0].temperature || 'NO_TEMPERATURE' | translate}}</strong></p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <br/>
+    <!-- well grey -->
+  </div>
+  <br/>
+  <div class="row form-group" ng-show="can('button_actions')">
+    <div class="col-sm-5">
+      <div class="well well-lg">
+        <h2 class="regular subtitle">{{'EDIT' | translate}}</h2>
+        <div class="text-center">
+          <a ng-show="can('update_account')" ng-click="open('lg')" class="btn btn-link">
+            <i class="fa fa-lg fa-address-card" aria-hidden="true"></i> {{'EDIT_ACCOUNT' | translate}}
+          </a>
+          <a ng-show="can('update_phone_number')" ng-click="openPhone('sm')" class="btn btn-link">
+            <i class="fa fa-lg fa-phone"></i>
+            {{'EDIT_PHONE_NUMBER' | translate}}
+          </a>
+          <a ng-show="can('enable_payment')" ng-click="openStatus('sm')" class="btn btn-link">
+            <i class="fa fa-lg fa-check-circle-o" aria-hidden="true"></i> {{'EDIT_PAYMENT' | translate}}
+          </a>
+          <a ng-click="openBilling('sm')" ng-show="can('add_credit')" class="btn btn-link">
+            <i class="fa fa-lg fa-money"></i> {{'EDIT_BILLING' | translate}}
+          </a>
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="well well-lg">
+        <h2 class="regular subtitle">{{'VIEW' | translate}}</h2>
+        <div class="text-center">
+          <a href="#/sms/{{id}}" class="btn btn-link"><i class="fa fa-lg fa-comments"></i> {{'VIEW_SMS' | translate}}</a>
+          
+          <a href="#/meters/{{json.meters[0].serial}}" class="btn btn-link">
+            <i class="fa fa-lg fa-podcast"></i> {{'METER_PAGE' | translate}}
+          </a>
+          <a href="#/transactions/{{id}}" class="btn btn-link">
+            <i class="fa fa-lg fa-exchange"></i> {{'VIEW_TRANSACTION' | translate}}
+          </a>
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="well well-lg">
+        <h2 class="regular subtitle">Actions</h2>
+        <div class="text-center">
+          <a ng-click="openResetCycle('sm')" ng-show="can('reset_cycles')" class="btn btn-link"><i class="fa fa-lg fa-history"></i> {{'RESET' | translate}}</a>
+          <a ng-show="can('send_sms')" class="btn btn-link" ng-click="openSendSMS('sm')">
+            <i class="fa fa-lg fa-send"></i> {{'SEND' | translate}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+</div>

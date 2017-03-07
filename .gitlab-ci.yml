@@ -1,0 +1,35 @@
+image: docker:1.12
+
+stages:
+  - test
+  - deploy
+
+# run_npm_test:
+#   stage: test
+#   script:
+#     - npm install --silent
+#     - npm test
+
+deploy_to_s3:
+  type: deploy
+  before_script:
+  - apk add --no-cache nodejs python py-pip git
+  - pip install awscli
+  script:
+  - npm install -g brunch@2.9.0
+  - apk add --no-cache make g++ # Needed for node-sass
+  - npm install
+  - rm -rf public/*
+  - brunch build --production
+  - date > public/version.html
+  - echo $CI_BUILD_TAG" - "$CI_BUILD_REF >> public/version.html
+  - aws s3 sync --delete public/ s3://$AWS_BUCKET
+
+  - IMAGE_TAG=${CI_BUILD_TAG#"v"}
+  - "curl -X POST -H 'Content-type: application/json' --data '{\"attachments\":[{\"color\":\"warning\",\"title\":\"New code is live :tada:\",\"text\":\"Console version '$IMAGE_TAG' is deployed on our servers.\"}]}' https://hooks.slack.com/services/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"
+
+  artifacts:
+    paths:
+    - public
+  only:
+    - tags

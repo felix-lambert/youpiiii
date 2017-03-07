@@ -1,0 +1,15 @@
+<div class="container">
+  </br>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+
+      <map ng-if="readyForMap" zoom-to-include-markers="true" zoom="20" default-style="false">
+        <marker ng-repeat="pin in markerData" position="{{pin.latitude}},{{pin.longitude}}" title="{{pin.title}}"
+                icon="{{pin.image}}" on-click="showInfoWindow(event, pin)">
+
+        </marker>
+      </map>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">{{'EDIT_ACCOUNT' | translate}}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <form>
+          <br>
+          <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>{{'FIRST_NAME' | translate}}</label>
+              <input class='form-control' ng-model="vm.first_name" type='text'>
+            </div>
+            
+          </div>
+          
+          <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>{{'LAST_NAME' | translate}}</label>
+              <input ng-model="vm.last_name" class='form-control' type='text'>
+            </div>
+          </div>
+          <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>{{'SUBSCRIPTION' | translate}}</label>
+              <input ng-model="vm.subscription_fee" class='form-control' type='text'>
+            </div>
+          </div>
+          <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>{{'SUBSCRIPTION_DAYLY' | translate}}</label>
+              <input ng-model="vm.subscription_daily_fee" class='form-control' type='text'>
+            </div>
+          </div>
+          <div class='form-row form-group'>
+            <input type="radio" ng-model="vm.payment_enabled" value="1">
+            {{'ENABLE_PAYMENT' | translate}}
+            </input>
+            <input type="radio" ng-model="vm.payment_enabled" value="0">
+            {{'DISABLE_PAYMENT' | translate}}
+            </input>
+          </div>
+          <div class='form-row form-group'>
+            <input type="radio" ng-model="vm.test_account" value="0">{{'TRUE_ACCOUNT' | translate}}</input>
+            <input type="radio" ng-model="vm.test_account" value="1">{{'TEST_ACCOUNT' | translate}}</input>
+          </div>
+          <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>{{'SAFEGE' | translate}}</label>
+              <input ng-model="vm.utility_identifier" class='form-control' type='text'>
+            </div>
+          </div>
+          <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>Longitude</label>
+              <input ng-model="vm.gps_lon" class='form-control' type='text'>
+            </div>
+          </div>
+          <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>Latitude</label>
+              <input ng-model="vm.account.gps_lat" class='form-control' type='text'>
+            </div>
+          </div>
+          <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>{{'EMAIL' | translate}}</label>
+              <input ng-model="vm.contact_email" class='form-control' type='text'>
+            </div>
+          </div>
+          <!-- <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>Address</label>
+              <input ng-model="vm.address" class='form-control' type='text'>
+            </div>
+          </div> -->
+          <div class="form-row">
+            <div class='form-group expiration required'>
+              <label class='control-label'>{{'ZIPCODE' | translate}}</label>
+              <input ng-model="vm.zipcode" class='form-control card-expiry-month' type='text'>
+            </div>
+            
+          </div>
+          <div class="form-row">
+            <div class='form-group expiration required'>
+              <label class='control-label'>{{'CITY' | translate}}</label>
+              <input ng-model="vm.city" class='form-control card-expiry-month' type='text'>
+            </div>
+            
+          </div>
+          
+          <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>{{'PHONE' | translate}}</label>
+              <input ng-model="vm.contact_phone_number" class='form-control' placeholder="+227xxx" type='text'>
+            </div>
+          </div>
+          <!--           <div class='form-row'>
+            <div class='form-group'>
+              <label class='control-label'>Radio identifier</label>
+              <input ng-model="account.meters[0].radio_identifier" class='form-control' type='text'>
+            </div>
+          </div> -->
+        </form>
+        <div class="modal-footer">
+          <button class="btn btn-success" type="button" ng-click="ok()">{{'SAVE' | translate}}</button>
+          <button class="btn btn-warning" type="button" ng-click="cancel()">{{'CANCEL' | translate}}</button>
+        </div>
+      </div>
+      
+    </div>
+    
+    
+    
+  </div>
+</div>

@@ -1,0 +1,150 @@
+<div class="container">
+  <!--   <button ng-click="changeLanguage('fr')" translate="BUTTON_LANG_FR"></button>
+  <button ng-click="changeLanguage('en')" translate="BUTTON_LANG_EN"></button> -->
+  <div class="row">
+    <h1 class="main-title text-center">{{'ADD_ACCOUNT' | translate}}</h1>
+    <br/>
+    <div class="center-block">
+      <form name="form" role="form" class="form-horizontal col-sm-offset-4">
+        <div class="form-group">
+          <label class="col-sm-1" for="inputEmail1">{{'EMAIL' | translate}}</label>
+          <div class="col-sm-5"><input type="email" class="form-control form-control-lg input-lg" id="email" name="email" placeholder="citytaps@gmail.com" ng-model="json.contact_email">
+          <div ng-messages="form.email.$error" style="color:maroon" role="alert">
+            <div ng-message="email">{{'VALID_EMAIL' | translate}}</div>
+          </div></div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-3">
+            <label>{{'FIRST_NAME' | translate}}</label>
+            <input class="form-control form-control-lg input-lg" id="name" name="name" ng-model="json.first_name" placeholder="Ben" required />
+            <div ng-messages="form.name.$error" class="text-danger" role="alert">
+              <div ng-message="required">{{'VALID_FIRST_NAME' | translate}}</div>
+              
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <label>{{'LAST_NAME' | translate}}</label>
+            <input type="text" class="form-control form-control-lg input-lg" id="lastname" name="lastname" placeholder="Dupont" ng-model="json.last_name" required />
+            <div ng-messages="form.lastname.$error" class="text-danger" role="alert">
+              <div ng-message="required">{{'VALID_LAST_NAME' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-12" for="Current credit">{{'CREDIT' | translate}}</label>
+          <div class="col-sm-6"><input type="number" class="form-control form-control-lg input-lg" id="credit" name="credit" placeholder="547895" ng-model="json.current_credit">
+          <div ng-messages="form.credit.$error" class="text-danger">
+              <div ng-message="number">{{'VALID_NUMBER' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-12" for="subscriptionFee">{{'SUBSCRIPTION' | translate}}</label>
+          <div class="col-sm-6"><input type="number" class="form-control form-control-lg input-lg" id="subscription" name="subscription" min="0" placeholder="27" ng-model="json.subscriptionFee">
+            <div ng-messages="form.subscription.$error" class="text-danger">
+              <div ng-message="number">{{'VALID_NUMBER' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-1">{{'PHONE' | translate}}</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control form-control-lg input-lg" id="phone" name="phone" placeholder="+227 ..." ng-model="json.contact_phone_number" ng-pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/">
+            <div ng-messages="form.phone.$error" class="text-danger">
+              <div ng-message="pattern">{{'VALID_PHONE_NUMBER' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-3"><label>{{'CYCLE_DATE' | translate}}</label>
+          <input type="number" min="1" max="31" class="form-control form-control-lg input-lg" id="cycle" name="cycle" placeholder="17" ng-model="json.cycle_date">
+          <div ng-messages="form.cycle.$error" class="text-danger">
+              <div ng-message="number">{{'VALID_NUMBER' | translate}}</div>
+               <div ng-message="min">{{'VALID_BETWEEN' | translate}}</div>
+                  <div ng-message="max">{{'VALID_BETWEEN' | translate}}</div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <label>{{'CYCLE_CONSUMPTION' | translate}}</label>
+            <input type="number" class="form-control form-control-lg input-lg" id="cycle_consumption" name="cycle_consumption"  placeholder="m&sup3;" ng-model="json.cycle_cumulated_consumption">
+            <div ng-messages="form.cycle_consumption.$error" class="text-danger">
+              <div ng-message="number">{{'VALID_NUMBER' | translate}}</div>
+            </div>
+          </div>
+        </div>
+        <div class='form-row form-group'>
+          <div class="col-sm-6">
+            <input type="radio" class="radio-inline" ng-model="json.payment_enabled" value="1">
+              {{'ENABLE_PAYMENT' | translate}}
+            </input>
+            <input type="radio" class="radio-inline" ng-model="json.payment_enabled" value="0">
+            {{'DISABLE_PAYMENT' | translate}}
+            </input>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-3">
+            <label>SAFEGE</label>
+            <input type="text" class="form-control form-control-lg input-lg" id="utility" name="utility" placeholder="8102.007.4.16.01.01" ng-model="json.utility_identifier" ng-pattern="/^[0-9.]*$/">
+            <div ng-messages="form.utility.$error" class="text-danger">
+              <div ng-message="pattern">
+                {{'VALID_SAFEGE_NUMBER' | translate}}
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <label>{{'ZIPCODE' | translate}}</label>
+            <input type="number" class="form-control form-control-lg input-lg" id="zipcode" name="zipcode" placeholder="10568" ng-model="json.zipcode">
+            <div ng-messages="form.zipcode.$error" class="text-danger">
+              <div ng-message="number">
+                {{'VALID_NUMBER' | translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-3"><label>Latitude</label>
+            <input type="text" class="form-control form-control-lg input-lg" placeholder="13.511596" id="lat" name="lat" ng-model="json.gps_lat" ng-pattern="/^[0-9.]*$/">
+            <div ng-messages="form.lat.$error" class="text-danger">
+              <div ng-message="pattern">
+                {{'VALID_LATITUDE' | translate}}
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3"><label>Longitude</label>
+            <input type="text" class="form-control form-control-lg input-lg" placeholder="2.125385" ng-model="json.gps_lon" ng-pattern="/^[0-9.]*$/" id="lon" name="lon">
+            <div ng-messages="form.lon.$error" class="text-danger">
+              <div ng-message="pattern">
+                {{'VALID_LONGITUDE' | translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-3"><label>{{'CITY' | translate}}</label>
+          <input type="text" class="form-control form-control-lg input-lg" id="city" name="city" placeholder="Niamey" ng-model="json.city">
+          </div>
+          <div class="col-sm-3"><label>{{'COUNTRY' | translate}}</label><input type="text" class="form-control form-control-lg input-lg" id="country" name="country" placeholder="Niger" ng-model="json.country_code"></div>
+        </div>
+        <div class='form-row form-group'>
+          <div class="col-sm-6">
+              <input type="radio" ng-model="json.test_account" value="0">{{'TRUE_ACCOUNT' | translate}}</input>
+              <input type="radio" ng-model="json.test_account" value="1">{{'TEST_ACCOUNT' | translate}}</input>
+            </div>
+          </div>
+        <div class="form-group">
+          <div class="col-sm-6">
+            <button type="button" ng-disabled="form.$invalid" ng-click="saveAccount()" class="btn btn-primary btn-block btn-lg">{{'SAVE' | translate}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <hr>
+  </div>
+</div>
+<br/>
+<br/>
+
+<div class="alert alert-danger" ng-show="alert">
+{{errorMessage}}
+</div>

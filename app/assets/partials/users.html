@@ -1,0 +1,79 @@
+<div class="container">
+  </br>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="pull-left">
+      <div class="form-group">
+        <div class="icon-addon addon-sm input-search-account">
+          <input type="text" placeholder="{{'ACCOUNT_SEARCH' | translate}}" class="form-control input-search-account"
+                 name="search" id="search" ng-model="searchText">
+          <label for="search" class="fa fa-search" rel="tooltip" title="email"></label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="well-blue-table">
+    <div class="row center-block">
+      <table class="col-md-12 table-bordered table-striped table-condensed cf"
+             ng-mouseleave="hoveredCol = null; hoveredRow = null">
+        <thead class="cf">
+        <tr class="th-blue">
+          <th>{{'FIRST_NAME' | translate}}</th>
+          <th>{{'LAST_NAME' | translate}}</th>
+          <th>{{'EMAIL' | translate}}</th>
+          <th>{{'ROLE' | translate}}</th>
+          <th ng-show="can('update_user')">{{'DETAILS' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody ng-hide="users">
+        <tr>
+          <td colspan="30" align="center">{{'WAITING_FOR_API' | translate}}</td>
+        </tr>
+        </tbody>
+        <tbody ng-show="users">
+        <tr ng-repeat="user in users | filter: searchText" ng-click="showDetails(user.id)">
+          <td data-title="{{'FIRST_NAME' | translate}}"
+              ng-mouseover="mouseOverTd(user)"
+              ng-class="{highlighted: (hoveredRow == user)}">{{user.first_name}}
+          </td>
+          <td data-title="{{'LAST_NAME' | translate}}"
+              ng-mouseover="mouseOverTd(user)"
+              ng-class="{highlighted: (hoveredRow == user)}">{{user.last_name}}
+          </td>
+          <td data-title="{{'EMAIL' | translate}}"
+              ng-mouseover="mouseOverTd(user)"
+              ng-class="{highlighted: (hoveredRow == user)}">{{user.email}}
+          </td>
+          <td data-title="Role"
+              ng-mouseover="mouseOverTd(user)"
+              ng-show="user.role"
+              ng-class="{highlighted: (hoveredRow == user)}">{{user.role}}
+          </td>
+          <td data-title="Role"
+              ng-mouseover="mouseOverTd(user)"
+              ng-show="!user.role"
+              ng-class="{highlighted: (hoveredRow == user)}">{{'NO_ROLE' | translate}}
+          </td>
+          <td ng-mouseover="mouseOverTd(user)"
+              ng-show="can('update_user')"
+              ng-class="{highlighted: (hoveredRow == user)}"
+              data-title="More details" align="center"><a href="#/users/{{user.id}}">
+            <i class="fa fa-info fa-lg"></i></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row" ng-show="can('create_user')">
+    <p style="padding:16px">
+      <small><a href="/#/users/new">
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+          <span>{{'ADD_USER' | translate}}</span>
+        </button>
+      </a></small>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">
+    {{'ADD_OR_SUBSTRACT_CREDIT' | translate}}
+  </h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <input type="number" class="form-control col-md-4" id="addCredit" placeholder="{{'ADD_OR_SUBSTRACT_CREDIT' | translate}}" ng-model="current_credit">
+  <br/><br/><br/><br/>
+
+
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-success" ng-click="addCredit(current_credit)">{{'APPLY' | translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">{{'CLOSE' | translate}}</button>
+</div>

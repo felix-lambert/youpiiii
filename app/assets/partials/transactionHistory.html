@@ -1,0 +1,175 @@
+<div class="container">
+  <br/>
+  <div class="col-md-4 col-md-offset-3 pull-right">
+    <form action="" class="search-form">
+      <div class="form-group has-feedback">
+        <label for="search" class="sr-only">{{'SEARCH' | translate}}</label>
+        <input type="text" class="form-control" name="search" id="search" placeholder="search" ng-model="searchText">
+        <span class="fa fa-search form-control-feedback"></span>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="panel panel-login">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-4">
+              <a href="#" class="active" id="receive-form-link">{{'CREDIT_HISTORY' | translate}}</a>
+            </div>
+            <div class="col-xs-4">
+              <a href="#" ng-click="initSecondPage()" id="receive-negative-link">{{'DEBIT_HISTORY' | translate}}</a>
+            </div>
+            <div class="col-xs-4">
+              <a href="#" id="send-form-link">
+                {{'CONSUMPTION_HISTORY' | translate}}
+              </a>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <form id="receive-form" role="form" style="display: block;">
+                <div class="row">
+                  <div id="no-more-tables">
+                    <table class="col-md-11 table-bordered table-striped table-condensed cf">
+                      <thead class="cf">
+                      <tr class="th-blue">
+                        <th>Date</th>
+                        <th>{{'AMOUNT' | translate}}</th>
+                        <th>Balance</th>
+                        <th>{{'ORIGIN' | translate}}</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr ng-repeat="transaction in transactions | filter: searchText">
+                        <td data-title="Timestamp">{{transaction.timestamp * 1000 | date:'dd/MM/yyyy HH:mm:ss':'UTC'}}
+                        </td>
+                        <td data-title="Amount" ng-if="transaction.amount">{{transaction.amount}}</td>
+                        <td data-title="Amount" ng-if="!transaction.amount">No amount</td>
+                        <td data-title="Balance">{{transaction.current_credit}}
+                        </th>
+                        <td data-title="Origin">{{transaction.origin}}</td>
+
+                      </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center">
+                      <ul class="pagination">
+                        <li>
+                          <a href="" ng-click="paginationPositiveTransactions('1')">{{'FIRST' | translate}}</a>
+                        </li>
+                        <li>
+                          <a href="" ng-click="paginationPositiveTransactions('less')">
+                            <</a>
+                        </li>
+                        <li class="active">
+                          <a href="">{{paginationCurrent}}</a>
+                        </li>
+                        <li>
+                          <a href="" ng-click="paginationPositiveTransactions('more')">></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <form ng-hide="preventSecondPage" id="receive-negative" role="form" style="display: block;">
+                <div class="row">
+                  <div id="no-more-tables">
+                    <table class="col-md-11 table-bordered table-striped table-condensed cf">
+                      <thead class="cf">
+                      <tr class="th-blue">
+                        <th>Date</th>
+                        <th>{{'AMOUNT' | translate}}</th>
+                        <th>Balance</th>
+                        <th>{{'ORIGIN' | translate}}</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr ng-repeat="negTransaction in negativeTransactions | filter: searchText">
+                        <td data-title="Timestamp">{{negTransaction.timestamp * 1000 | date:'dd/MM/yyyy HH:mm:ss':'UTC'}}
+                        </td>
+                        <td data-title="Amount">{{negTransaction.amount || 'No amount'}}</td>
+                        <td data-title="Balance">{{negTransaction.current_credit}}
+                        </th>
+                        <td data-title="Origin">{{negTransaction.origin}}</td>
+
+                      </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-center">
+                      <ul class="pagination">
+                        <li>
+                          <a href="" ng-click="paginationNegativeTransactions('1')">{{'FIRST' | translate}}}</a>
+                        </li>
+                        <li>
+                          <a href="" ng-click="paginationNegativeTransactions('less')">
+                            <</a>
+                        </li>
+                        <li class="active">
+                          <a href="">{{paginationCurrentNegative}}</a>
+                        </li>
+                        <li>
+                          <a href="" ng-click="paginationNegativeTransactions('more')">></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <form id="send-form" style="display: none;">
+                <div class="container">
+                  <div class="row">
+                    <div id="no-more-tables">
+                      <table class="col-md-11 table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
+                        <tr class="th-blue">
+                          <th>Date</th>
+                          <th>{{'CONSUMPTION' | translate}}</th>
+                          <th>Index</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="consumption in consumptions | filter:searchText">
+                          <td data-title="Timestamp">{{consumption.timestamp * 1000 | date:'dd-MM-yyyy HH:mm:ss':'UTC'}}
+                          </td>
+                          <td data-title="Consumption">{{consumption.consumption}}</td>
+                          <td data-title="Index">{{consumption.index}}</td>
+
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div class="text-center">
+                        <ul class="pagination">
+                          <li>
+                            <a href="" ng-click="paginationConsumption('1')">{{'FIRST' | translate}}}</a>
+                          </li>
+                          <li>
+                            <a href="" ng-click="paginationConsumption('less')">
+                              <</a>
+                          </li>
+                          <li class="active">
+                            <a href="">{{paginationCurrentConsumption}}</a>
+                          </li>
+                          <li>
+                            <a href="" ng-click="paginationConsumption('more')">></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

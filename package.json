@@ -1,0 +1,27 @@
+{
+  "author": "Thomas Lim",
+  "name": "ct-console",
+  "description": "CityTaps client",
+  "version": "1.7.68",
+  "homepage": "",
+  "scripts": {
+    "start": "brunch watch --server"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.0",
+    "bootstrap-sass": "^3.3.7",
+    "clean-css-brunch": "1.7.1",
+    "css-brunch": "1.7.0",
+    "express": "^4.13.3",
+    "grunt": "^1.0.1",
+    "javascript-brunch": "1.7.1",
+    "json-brunch": "^1.5.4",
+    "sass-brunch": "^1.9.2",
+    "stylus-brunch": "1.8.0",
+    "uglify-js-brunch": "1.7.6"
+  },
+  "devDependencies": {
+    "grunt-ng-constant": "^2.0.1",
+    "grunt-shell": "^2.1.0"
+  }
+}

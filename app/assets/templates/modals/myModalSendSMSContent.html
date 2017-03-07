@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">{{'SEND' | translate}}: {{account.contact_phone_number}}
+  </h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+	<textarea ng-model="smsToSend" maxlength="160" placeholder="{{'CONTENT' | translate}}" class="form-control" rows="3"></textarea>
+</div>
+<div class="modal-footer">
+  <div class="pull-left">{{(smsToSend).length || "0"}}/160 characters</div>
+  <button type="submit" class="btn btn-success" ng-click="sendSMS(smsToSend)">{{'SEND' | translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">{{'CANCEL' | translate}}</button>
+</div>
